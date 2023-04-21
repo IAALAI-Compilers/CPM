@@ -3,18 +3,21 @@
 #include <stdint.h>
 #include <string>
 #include <vector>
-#include "Lexical.hh"
+#include "./Lexical/Lexical.hh"
 #include "Option.hh"
 
 __option__ option;
 
+namespace cpm {
 auto parse(std::string s) {
     std::ifstream file;
     file.open(s);
     file >> s;
-    tokens tk(s);
-    return tk.data;
+    Lexical::tokens tk(s);
+    return tk;
 };
+} // namespace cpm
+
 
 std::vector<std::string> dt;
 int main(int argc,char ** argv) {
@@ -23,12 +26,9 @@ int main(int argc,char ** argv) {
         if (argv[i][0] == '-') {
             option.getArgm(argv[i] + 1);
         } else {
-            auto c = parse(argv[i]);
-            for(auto l : c) {
-                // std::cout << l.value << '\n';
-            }
+            
         }
     }
 
-    return 0;
+    return cpm::status;
 }
